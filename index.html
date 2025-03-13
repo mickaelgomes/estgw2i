@@ -16,13 +16,18 @@
       type="nft"
       url="https://mickaelgomes.github.io/estgw2i/img/teste"
       smooth="true"
-      smoothCount="10"
-      smoothTolerance=".01"
-      smoothThreshold="5"
+      smoothCount="50"
+      smoothTolerance=".05"
+      smoothThreshold="45"
     >
       <!-- Plane to display the image -->
-      <a-plane id="imagePlane" position="0 0 0" rotation="-90 0 0" width="30" height="30" material="shader: flat; scale: 1 1 1; src:https://mickaelgomes.github.io/estgw2i/img/entrada.jpg"></a-plane>
+      <a-plane id="imagePlane" position="0 0 0" rotation="-90 0 0" width="150" height="150" material="shader: flat; scale: 1 1 1; src:https://mickaelgomes.github.io/estgw2i/img/entrada.jpg"></a-plane>
     </a-nft>
+    
+    <a-marker type="pattern" url="https://mickaelgomes.github.io/estgw2i/img/pattern-hiro.patt">
+      <!-- Plane to display the image -->
+      <a-plane id="imagePlane" position="0 0 0" rotation="-90 0 0" width="2" height="2" material="shader: flat; scale: 1 1 1; src:https://mickaelgomes.github.io/estgw2i/img/entrada.jpg"></a-plane>
+    </a-marker>
     <!-- Camera to view the scene -->
     <a-entity camera></a-entity>
   </a-scene>
