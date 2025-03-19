@@ -10,26 +10,57 @@
   <a-scene vr-mode-ui="enabled: false;"
   renderer="logarithmicDepthBuffer: true;"
   embedded
-  arjs="trackingMethod: best; sourceType: webcam;debugUIEnabled: false;">
+  arjs="trackingMethod: best; sourceType: webcam;debugUIEnabled: true;">
     <!-- Marker for tracking -->
     <a-nft
       type="nft"
-      url="https://mickaelgomes.github.io/estgw2i/img/porta"
+      url="img/porta"
       smooth="true"
       smoothCount="10"
       smoothTolerance=".01"
       smoothThreshold="5"
+      id="nftMarker"
     >
       <!-- Plane to display the image -->
-      <a-plane id="imagePlane" position="0 0 0" rotation="-90 0 0" width="150" height="150" material="shader: flat; scale: 1 1 1; src:https://mickaelgomes.github.io/estgw2i/img/entrada.jpg"></a-plane>
+      <a-plane id="imagePlane" position="2 0 0" rotation="-90 0 0" width="150" height="150" material="shader: flat; scale: 1 1 1; src:img/entrada.jpg"></a-plane>
+    
+    </a-nft>
+
+    <a-nft
+      type="nft"
+      url="img/lca"
+      smooth="true"
+      smoothCount="10"
+      smoothTolerance=".01"
+      smoothThreshold="5"
+      id="nftMarker"
+    >
+      <!-- Plane to display the image -->
+      
+      <a-plane id="imagePlane" position="2 0 0" rotation="-90 0 0" width="150" height="150" material="shader: flat; scale: 1 1 1; src:img/entrada.jpg"></a-plane>
+    
+      <a-text id="linkText" value="Clique aqui" color="red" scale="1 1 1" anchor="center" 
+              position="0 1 0" ></a-text>
+
     </a-nft>
     
-    <a-marker type="pattern" url="https://mickaelgomes.github.io/estgw2i/img/pattern-hiro.patt">
-      <!-- Plane to display the image -->
-      <a-plane id="imagePlane" position="0 0 0" rotation="-90 0 0" width="2" height="2" material="shader: flat; scale: 1 1 1; src:https://mickaelgomes.github.io/estgw2i/img/entrada.jpg"></a-plane>
+    <a-marker preset="hiro">
+      <!-- Plane to display the image -->    
+        <a-entity position="2 0 0" rotation="-90 0 0">
+            <a-text id="linkText" value="Clique" color="red" scale="1 1 1" anchor="center"></a-text>
+        </a-entity>
     </a-marker>
     <!-- Camera to view the scene -->
-    <a-entity camera></a-entity>
+    <a-entity camera>
+      <a-cursor id="cursor" fuse="false"></a-cursor>
+    </a-entity>
   </a-scene>
+  <script>
+    document.querySelector("#linkText").addEventListener("click", function () {
+      window.open("https://ead.ipleiria.pt", "_blank");
+    });
+
+ 
+</script>
 </body>
 </html>
