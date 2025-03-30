@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test AR #1</title>
+  <script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@1c2407b26c61958baa93967b5412487cd94b290b/dist/aframe-master.min.js"></script>
+  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
+
+</head>
+<body style="margin: 0; overflow: hidden;">
+  <a-scene vr-mode-ui="enabled: false;"
+  renderer="logarithmicDepthBuffer: true;"
+  embedded
+  arjs="trackingMethod: best; sourceType: webcam;debugUIEnabled: true;">
+    <!-- Marker for tracking -->
+    <a-nft
+      type="nft"
+      url="https://mickaelgomes.github.io/estgw2i/img/porta"
+      smooth="true"
+      smoothCount="10"
+      smoothTolerance=".01"
+      smoothThreshold="5"
+      id="nftMarker"
+    >
+      <!-- Plane to display the image -->
+      <a-plane id="imagePlane" position="2 0 0" rotation="-90 0 0" width="150" height="150" material="shader: flat; scale: 1 1 1; src:https://mickaelgomes.github.io/estgw2i/img/entrada.jpg"></a-plane>
+    
+    </a-nft>
+
+    <a-nft
+      type="nft"
+      url="https://mickaelgomes.github.io/estgw2i/img/lca"
+      smooth="true"
+      smoothCount="10"
+      smoothTolerance=".01"
+      smoothThreshold="5"
+      id="nftMarker"
+    >
+      <!-- Plane to display the image -->
+      
+      <a-plane id="imagePlane" position="2 0 0" rotation="-90 0 0" width="150" height="150" material="shader: flat; scale: 1 1 1; src:https://mickaelgomes.github.io/estgw2i/img/entrada.jpg"></a-plane>
+    
+    </a-nft>
+    
+    <a-marker preset="hiro">
+      <!-- Plane to display the image -->    
+        <a-entity position="2 0 0" rotation="-90 0 0">
+            <a-text id="linkText" value="Clique" color="red" scale="1 1 1" anchor="center"></a-text>
+        </a-entity>
+    </a-marker>
+    <!-- Camera to view the scene -->
+    <a-entity camera>
+      <a-cursor id="cursor" fuse="false"></a-cursor>
+    </a-entity>
+  </a-scene>
+  <script>
+    document.querySelector("#linkText").addEventListener("click", function () {
+      window.open("https://ead.ipleiria.pt", "_blank");
+    });
+
+ 
+</script>
+</body>
+</html>

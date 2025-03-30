@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/three.js/build/ar.js"></script>
+  </head>
+  <body style="margin: 0; overflow: hidden;">
+    <script>
+      console.log("Iniciando AR.js...");
+      
+      // Criar a cena, câmera e renderizador
+      const scene = new THREE.Scene();
+      const camera = new THREE.Camera();
+      scene.add(camera);
+      
+      const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document.body.appendChild(renderer.domElement);
+      
+      // Configurar AR.js
+      const arSource = new THREEx.ArToolkitSource({ sourceType: "webcam",
+        sourceWidth: window.innerWidth,
+        sourceHeight: window.innerHeight,
+        displayWidth: window.innerWidth,
+        displayHeight: window.innerHeight,});
+      arSource.init(() => {
+        console.log("Câmera iniciada");
+        arSource.onResize(renderer.domElement);
+      });
+      
+      const arContext = new THREEx.ArToolkitContext({ cameraParametersUrl: 'camera_para.dat', detectionMode: 'mono' });
+      arContext.init(() => {
+        console.log("AR.js inicializado");
+        camera.projectionMatrix.copy(arContext.getProjectionMatrix());
+      });
+      
+      // Criar um marcador HIRO
+      const markerControls = new THREEx.ArMarkerControls(arContext, camera, { type: 'pattern', patternUrl: 'pattern-hiro.patt' });
+      console.log("Marcador carregado");
+      
+      // Criar um grupo para associar os objetos ao marcador
+      const markerGroup = new THREE.Group();
+      scene.add(markerGroup);
+      
+      // Criar um texto
+      const loader = new THREE.FontLoader();
+      loader.load('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json', function (font) {
+        console.log("Fonte carregada");
+        const textGeometry = new THREE.TextGeometry('Sala 101', {
+          font: font,
+          size: 0.2,
+          height: 0.02,
+        });
+        const textMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+        const textMesh = new THREE.Mesh(textGeometry, textMaterial);
+        textMesh.position.set(-0.4, 0.3, 0);
+        markerGroup.add(textMesh);
+      });
+      
+      // Criar uma imagem
+      const textureLoader = new THREE.TextureLoader();
+      const imageTexture = textureLoader.load('entrada.jpg', () => console.log("Imagem carregada"));
+      const imageGeometry = new THREE.PlaneGeometry(0.8, 0.5);
+      const imageMaterial = new THREE.MeshBasicMaterial({ map: imageTexture });
+      const imageMesh = new THREE.Mesh(imageGeometry, imageMaterial);
+      imageMesh.position.set(0, 0, 0);
+      markerGroup.add(imageMesh);
+      
+      // Criar um botão clicável
+      const buttonGeometry = new THREE.PlaneGeometry(0.8, 0.2);
+      const buttonMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff, transparent: true, opacity: 0.7 });
+      const buttonMesh = new THREE.Mesh(buttonGeometry, buttonMaterial);
+      buttonMesh.position.set(0, -0.4, 0);
+      markerGroup.add(buttonMesh);
+      
+      // Detectar clique no botão
+      document.addEventListener('click', (event) => {
+        const raycaster = new THREE.Raycaster();
+        const mouse = new THREE.Vector2(
+          (event.clientX / window.innerWidth) * 2 - 1,
+          -(event.clientY / window.innerHeight) * 2 + 1
+        );
+        raycaster.setFromCamera(mouse, camera);
+        const intersects = raycaster.intersectObject(buttonMesh);
+        if (intersects.length > 0) {
+          console.log("Botão clicado! Abrindo link...");
+          window.open('https://minhaplataforma.com/sala101', '_blank');
+        }
+      });
+      
+      // Loop de renderização
+      function animate() {
+        requestAnimationFrame(animate);
+        if (arSource.ready) {
+          arContext.update(arSource.domElement);
+          scene.visible = camera.visible;
+        }
+        renderer.render(scene, camera);
+      }
+      
+      console.log("Iniciando renderização...");
+      animate();
+    </script>
+  </body>
+</html>
